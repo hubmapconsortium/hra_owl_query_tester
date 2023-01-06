@@ -27,7 +27,7 @@ A Python runner + GitHub actions will run these queries against the endpoints, r
 * Location(s) of cell type X expressing marker Z
  
 ### Potential endpoints/query mechanisms:
-* CCF.owl + relationgraph --> SPARQL queries of precomputed OWL inferences.  Pre-generate
+* CCF.owl + relationgraph --> SPARQL queries of precomputed OWL inferences.  Pre-generate file with RG. SPARQL Queries could be run in ROBOT.
 * CCF.owl --> SPARQL queries of CCF properties (Use file as-is Queries in ROBOT)
 * CCF.owl + EL queries via [OWLERY](https://github.com/phenoscape/owlery) (would require firing up local server - needs containerization)
 
