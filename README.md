@@ -12,7 +12,7 @@ A YAML configuration will specify:
 * A competency question (expressed in plain text).  
 * A list of objects specifying
    * Input terms(s)
-   * A minimal answer - some set of terms that that the  query should return, based on the intention of ASCT+B table author.
+   * A minimal answer - some set of terms that the  query should return, based on the intention of ASCT+B table author.
 * A list of objects specifying:
   * An endpoint
   * A formal query in the correct syntax for the endpoint
@@ -27,7 +27,7 @@ A Python runner + GitHub actions will run these queries against the endpoints, r
 * Location(s) of cell type X expressing marker Z
  
 ### Potential endpoints/query mechanisms:
-* CCF.owl + relationgraph --> SPARQL queries of precomputed OWL inferences
-* CCF.owl + EL queries via OWLERY (would require server)
-* CCF.owl --> SPARQL queries of CCF properties
- 
+* CCF.owl + relationgraph --> SPARQL queries of precomputed OWL inferences.  Pre-generate
+* CCF.owl --> SPARQL queries of CCF properties (Use file as-is Queries in ROBOT)
+* CCF.owl + EL queries via [OWLERY](https://github.com/phenoscape/owlery) (would require firing up local server - needs containerization)
+
