@@ -11,11 +11,13 @@ A YAML configuration will specify:
 
 * A competency question (expressed in plain text).  
 * A list of objects specifying
-   * Input terms(s)
+   * Input term(s)
    * A minimal answer - some set of terms that the  query should return, based on the intention of ASCT+B table author.
 * A list of objects specifying:
   * An endpoint
   * A formal query in the correct syntax for the endpoint
+
+Make a JSON schema + add validator for YAML.
   
 A Python runner + GitHub actions will run these queries against the endpoints, reporting success, or not.
 
