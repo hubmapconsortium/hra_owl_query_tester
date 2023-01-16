@@ -1,0 +1,52 @@
+description: This tests all cells expressing marker Z
+
+input:
+  - http://identifiers.org/hgnc/6445
+
+expected_result:
+  - http://purl.obolibrary.org/obo/CL_0000033
+  - http://purl.obolibrary.org/obo/CL_0000523
+  - http://purl.obolibrary.org/obo/CL_0000244
+  - http://purl.obolibrary.org/obo/CL_0002536
+  - http://purl.obolibrary.org/obo/CL_0000434
+  - http://purl.obolibrary.org/obo/CL_0008036
+  - http://purl.obolibrary.org/obo/CL_0000525
+  - http://purl.obolibrary.org/obo/CL_0000240
+  - http://purl.obolibrary.org/obo/CL_0008036
+  - http://purl.obolibrary.org/obo/CL_0000241
+  - http://purl.obolibrary.org/obo/CL_0000317
+  - http://purl.obolibrary.org/obo/CL_0000146
+
+query_mechanism:
+  relationgraph:
+    query: "
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX owl: <http://www.w3.org/2002/07/owl#>
+      PREFIX cell: <http://purl.obolibrary.org/obo/CL_0000000>
+      PREFIX ccf: <http://purl.org/ccf/>
+      PREFIX has_characterizing_marker_set: <http://purl.obolibrary.org/obo/RO_0015004>
+      PREFIX marker_component: <http://purl.org/ccf/has_marker_component>
+
+      SELECT ?cell
+      WHERE {
+        ?cell rdfs:subClassOf [ 
+          owl:onProperty has_characterizing_marker_set: ;
+          owl:someValuesFrom [
+            owl:intersectionOf/rdf:rest*/rdf:first [
+              owl:onProperty marker_component: ;
+              owl:someValuesFrom ?marker
+            ]
+          ] 
+        ] .
+      }
+    "
+    var:
+      - marker
+  ccf:
+    query: ""
+    var:
+      - 
+  owlery:
+    query: ""
+    var:
+      -
