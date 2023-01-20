@@ -2,8 +2,10 @@ import os
 import argparse
 import pathlib
 import logging
-import rdflib
+import pandas as pd
+import glob
 from ruamel.yaml import YAML, YAMLError
+from runner import Runner
 
 logging.basicConfig(level=logging.INFO)
 
@@ -11,11 +13,12 @@ def create_sparql(id: str, query: str, input: dict):
   for var_name, values in input.items():
     values = list(map(lambda x: "<"+x+">", values))
     query = query.replace(f"{var_name}",' '.join(values))
-
-  with open(f'sparql/{id}.sparql', 'w') as f:
+  output = f'sparql/{id}.sparql'
+  
+  with open(output, 'w') as f:
     f.write(query)
   
-  return query
+  return output
 
 def parse_tester(config) -> dict:
   tests = {}
@@ -35,7 +38,7 @@ def parse_tester(config) -> dict:
   if 'relationgraph' in qm.keys():
     t = {}
     endpoint = qm['relationgraph']
-    t['endpoint'] = 'relationship'
+    t['endpoint'] = 'relationgraph'
     t['query'] = create_sparql(f"mat-{comp_ques['id']}", endpoint['query'], input)
     tests['endpoints'].append(t)
   if 'ccf' in qm.keys():
@@ -48,38 +51,51 @@ def parse_tester(config) -> dict:
   return tests
 
 def run_query(endpoint, query):
-  print(endpoint)
-  g = rdflib.Graph()
-  g.parse(endpoint)
-
-  qres = g.query(query)
-  results = []
-  for row in qres:
-    results.append(row.cell)
-    
+  runner = Runner()
+  
+  results = runner.run_cmd(input_file=endpoint, query_file=query)
+  
   return results
 
-def compare_results(expected_results: list, results: list):
-  return True
+def compare_results(expected_results: dict, results: pathlib.Path):
+  df = pd.read_csv(results)
+  var = list(expected_results.keys())[0]
+
+  report = df[df[f'{var}'].isin(expected_results[f'{var}'])]
+  return len(report) < len(expected_results[f'{var}'])
   
 
 def run_tests(tests: dict):
   for e in tests['endpoints']:
     endpoint = ""
-    print(e)
     if e['endpoint'] == 'relationgraph':
-      endpoint = "endpoints/ccf-materialized.owl"
+      endpoint = "endpoints/ccf-extended.owl"
     if e['endpoint'] == 'ccf':
       endpoint = "endpoints/ccf.owl"
     results = run_query(endpoint, e['query'])
-    # compare_results(tests['expected_results'], results)
+    if compare_results(tests['expected_results'], results):
+      logging.info(f"FAILED for {e['endpoint']}")
+    else:
+      logging.info(f"PASSED for {e['endpoint']}")
 
 def main(input):
-  if input.endswith('yaml') or input.endswith('yml'):
-    config_file = os.path.abspath(input)
+  if os.path.isdir(input):
+    if not input.endswith(os.path.sep):
+      input += os.path.sep
+    test_docs = glob.glob(input + "*.yaml")
+    test_docs.extend(glob.glob(input + "*.yml"))
+  elif input.endswith('.yaml') or input.endswith('.yml'):
+    test_docs = [os.path.abspath(input)]
+  else:
+    logging.error("Given path has unsupported file extension.", )
 
-  tests = parse_tester(config_file)
-  run_tests(tests)
+  for test_doc in test_docs:
+    if len(test_docs) > 1:
+      logging.info(f'Checking {test_doc}')
+
+    config_file = os.path.abspath(test_doc)
+    tests = parse_tester(config_file)
+    run_tests(tests)
 
 
 if __name__ == "__main__":

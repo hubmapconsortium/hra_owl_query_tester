@@ -4,22 +4,22 @@ description: This tests all cells expressing marker Z
 input:
   markers:
     - http://identifiers.org/hgnc/6445
-    - http://identifiers.org/hgnc/384
 
 expected_result:
-  - http://purl.obolibrary.org/obo/CL_0000033
-  - http://purl.obolibrary.org/obo/CL_0000523
-  - http://purl.obolibrary.org/obo/CL_0000244
-  - http://purl.obolibrary.org/obo/CL_0002536
-  - http://purl.obolibrary.org/obo/CL_0000434
-  - http://purl.obolibrary.org/obo/CL_0008036
-  - http://purl.obolibrary.org/obo/CL_0000525
-  - http://purl.obolibrary.org/obo/CL_0000240
-  - http://purl.obolibrary.org/obo/CL_0008036
-  - http://purl.obolibrary.org/obo/CL_0000241
-  - http://purl.obolibrary.org/obo/CL_0000317
-  - http://purl.obolibrary.org/obo/CL_0000146
-  - http://purl.obolibrary.org/obo/CL_0000738
+  cell:
+    - http://purl.obolibrary.org/obo/CL_0000033
+    - http://purl.obolibrary.org/obo/CL_0000523
+    - http://purl.obolibrary.org/obo/CL_0000244
+    - http://purl.obolibrary.org/obo/CL_0002536
+    - http://purl.obolibrary.org/obo/CL_0000434
+    - http://purl.obolibrary.org/obo/CL_0008036
+    - http://purl.obolibrary.org/obo/CL_0000525
+    - http://purl.obolibrary.org/obo/CL_0000240
+    - http://purl.obolibrary.org/obo/CL_0008036
+    - http://purl.obolibrary.org/obo/CL_0000241
+    - http://purl.obolibrary.org/obo/CL_0000317
+    - http://purl.obolibrary.org/obo/CL_0000146
+    - http://purl.obolibrary.org/obo/CL_0000738
 
 query_mechanism:
   ccf:
