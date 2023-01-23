@@ -1,5 +1,6 @@
 name: Run Query Tester
 
+on:
   # Triggers the workflow weekly on Mondays at 6:54 am
   schedule:
     - cron: '54 6 * * 1'
