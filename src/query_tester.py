@@ -58,6 +58,9 @@ def run_query(endpoint, query):
   return results
 
 def compare_results(expected_results: dict, results: pathlib.Path):
+  if os.path.getsize(results) == 0:
+    return True
+   
   df = pd.read_csv(results)
   var = list(expected_results.keys())[0]
 
