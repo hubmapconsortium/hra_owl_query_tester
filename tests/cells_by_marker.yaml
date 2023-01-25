@@ -16,10 +16,6 @@ expected_result:
     - http://purl.obolibrary.org/obo/CL_0000525
     - http://purl.obolibrary.org/obo/CL_0000240
     - http://purl.obolibrary.org/obo/CL_0008036
-    - http://purl.obolibrary.org/obo/CL_0000241
-    - http://purl.obolibrary.org/obo/CL_0000317
-    - http://purl.obolibrary.org/obo/CL_0000146
-    - http://purl.obolibrary.org/obo/CL_0000738
 
 query_mechanism:
   ccf:
