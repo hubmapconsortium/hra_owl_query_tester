@@ -31,8 +31,5 @@ query_mechanism:
           locations
         }
         ?cell rdfs:subClassOf cell: .
-        ?cell rdfs:subClassOf [
-          owl:onProperty part_of:;
-          owl:someValuesFrom ?location
-        ] .
+        ?cell part_of: ?location .
       }"
