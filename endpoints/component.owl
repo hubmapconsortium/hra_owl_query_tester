@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://purl.org/ccf/ccf.owl#"
+     xml:base="http://purl.org/ccf/ccf.owl"
+     xmlns:obo="http://purl.obolibrary.org/obo/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+     <owl:Ontology> </owl:Ontology>
+     
+    <!-- http://purl.obolibrary.org/obo/RO_0002292 -->
+
+    <owl:ObjectProperty rdf:about="http://purl.obolibrary.org/obo/RO_0002292">
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://purl.obolibrary.org/obo/RO_0015004"/>
+            <rdf:Description rdf:about="http://purl.org/ccf/has_marker_component"/>
+        </owl:propertyChainAxiom>
+        <rdfs:label>expresses</rdfs:label>
+    </owl:ObjectProperty>
+
+    <!-- http://purl.obolibrary.org/obo/RO_0015004 -->
+
+    <owl:ObjectProperty rdf:about="http://purl.obolibrary.org/obo/RO_0015004">
+        <rdfs:comment xml:lang="en">Originated from the CCF Biological Structure (CCF-BSO) ontology</rdfs:comment>
+        <rdfs:label>has characterizing marker set</rdfs:label>
+    </owl:ObjectProperty>
+
+    <!-- http://purl.org/ccf/has_marker_component -->
+
+    <owl:ObjectProperty rdf:about="http://purl.org/ccf/has_marker_component">
+        <rdfs:comment xml:lang="en">Originated from the CCF Biological Structure (CCF-BSO) ontology</rdfs:comment>
+        <rdfs:label>has marker component</rdfs:label>
+    </owl:ObjectProperty>
+  </rdf:RDF>
