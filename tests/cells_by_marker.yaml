@@ -18,26 +18,15 @@ expected_result:
     - http://purl.obolibrary.org/obo/CL_0008036
 
 query_mechanism:
-  ccf:
+  relationgraph:
     query: "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      PREFIX owl: <http://www.w3.org/2002/07/owl#>
-      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-      PREFIX has_characterizing_marker_set: <http://purl.obolibrary.org/obo/RO_0015004>
-      PREFIX marker_component: <http://purl.org/ccf/has_marker_component>
+      PREFIX expresses: <http://purl.obolibrary.org/obo/RO_0002292>
 
       SELECT ?cell
       WHERE {
         VALUES ?marker {
           markers
         }
-        ?cell rdfs:subClassOf [ 
-          owl:onProperty has_characterizing_marker_set: ;
-          owl:someValuesFrom [
-            owl:intersectionOf/rdf:rest*/rdf:first [
-              owl:onProperty marker_component: ;
-              owl:someValuesFrom ?marker 
-            ]
-          ] 
-        ] .
+        ?cell expresses: ?marker .
       }
     "
