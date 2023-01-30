@@ -53,33 +53,42 @@ def parse_tester(config) -> dict:
 def run_query(endpoint, query):
   runner = Runner()
   
-  results = runner.run_cmd(input_file=endpoint, query_file=query)
+  results = runner.run_cmd(endpoint=endpoint, query_file=query)
   
   return results
 
 def compare_results(expected_results: dict, results: pathlib.Path):
-  if os.path.getsize(results) == 0:
-    return True
-   
-  df = pd.read_csv(results)
   var = list(expected_results.keys())[0]
-
-  report = df[df[f'{var}'].isin(expected_results[f'{var}'])]
-  return len(report) < len(expected_results[f'{var}'])
+  res = set(pd.read_csv(results)[f'{var}'])
+  exp = set(expected_results[f'{var}'])
+  missing = exp - res
+  misplaced = res - exp
   
+  return missing, misplaced
+
+def is_test_passed(expected_results, results):
+  if os.path.getsize(results) == 0:
+    logging.info("No results found. Please, check the query.")
+    return False
+   
+  missing, misplaced = compare_results(expected_results=expected_results, results=results)
+  if len(missing) == 0 and len(misplaced) == 0:
+    return True
+  if len(missing) or len(misplaced):
+    if len(missing):
+      logging.info(f"Following terms are missing: {missing}")
+    if len(misplaced):
+      logging.info(f"Following terms are not expected: {misplaced}")
+    return False
+
 
 def run_tests(tests: dict):
   for e in tests['endpoints']:
-    endpoint = ""
-    if e['endpoint'] == 'relationgraph':
-      endpoint = "endpoints/ccf-extended.owl"
-    if e['endpoint'] == 'ccf':
-      endpoint = "endpoints/ccf.owl"
-    results = run_query(endpoint, e['query'])
-    if compare_results(tests['expected_results'], results):
-      logging.info(f"FAILED for {e['endpoint']}")
-    else:
+    results = run_query(e['endpoint'], e['query'])
+    if is_test_passed(expected_results=tests['expected_results'], results=results):
       logging.info(f"PASSED for {e['endpoint']}")
+    else:
+      logging.info(f"FAILED for {e['endpoint']}")
 
 def main(input):
   if os.path.isdir(input):
