@@ -1,0 +1,43 @@
+id: cells_in_eye
+description: Tests cells types located in Eye
+
+input:
+  locations:
+    - http://purl.obolibrary.org/obo/UBERON_0000970
+    
+expected_result:
+  cell:
+    - http://purl.obolibrary.org/obo/CL_0002303
+    - http://purl.obolibrary.org/obo/CL_0000132
+    - http://purl.obolibrary.org/obo/CL_0002304
+    - http://purl.obolibrary.org/obo/CL_0000636
+    - http://purl.obolibrary.org/obo/CL_0000750
+    - http://purl.obolibrary.org/obo/CL_0000749
+    - http://purl.obolibrary.org/obo/CL_0000575
+    - http://purl.obolibrary.org/obo/CL_0002565
+    - http://purl.obolibrary.org/obo/CL_0002224
+    - http://purl.obolibrary.org/obo/CL_0011004
+    - http://purl.obolibrary.org/obo/CL_0002228
+    - http://purl.obolibrary.org/obo/CL_0002585
+    - http://purl.obolibrary.org/obo/CL_0000573
+    - http://purl.obolibrary.org/obo/CL_0002586
+    - http://purl.obolibrary.org/obo/CL_0000604
+    - http://purl.obolibrary.org/obo/CL_0000751
+    - http://purl.obolibrary.org/obo/CL_0002225
+    - http://purl.obolibrary.org/obo/CL_0002363
+
+query_mechanism:
+  relationgraph:
+    query: "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX owl: <http://www.w3.org/2002/07/owl#>
+      PREFIX part_of: <http://purl.obolibrary.org/obo/BFO_0000050>
+      PREFIX cell: <http://purl.obolibrary.org/obo/CL_0000000>
+
+      SELECT DISTINCT ?cell
+      WHERE {
+        VALUES ?location {
+          locations
+        }
+        ?cell rdfs:subClassOf cell: .
+        ?cell part_of: ?location
+      }"
