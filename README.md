@@ -33,3 +33,7 @@ A Python runner + GitHub actions will run these queries against the endpoints, r
 * CCF.owl --> SPARQL queries of CCF properties (Use file as-is Queries in ROBOT)
 * CCF.owl + EL queries via [OWLERY](https://github.com/phenoscape/owlery) (would require firing up local server - needs containerization)
 
+## How to add tests and run them
+
+1. Create a yaml file with the test and save it in the tests folder
+1. After the test is pushed to the main branch, the GitHub Action runs all tests. The result of each test is in the file `results/test_log.txt`.
