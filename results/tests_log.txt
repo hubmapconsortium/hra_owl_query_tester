@@ -1,0 +1,6 @@
+INFO:root:Checking tests/cells_by_location.yaml
+INFO:root:No results found. Please, check the query.
+INFO:root:FAILED for relationgraph
+INFO:root:Checking tests/cells_by_marker.yaml
+INFO:root:Following terms are missing: {'http://purl.obolibrary.org/obo/CL_0000738'}
+INFO:root:FAILED for ccf
