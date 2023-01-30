@@ -1,9 +1,11 @@
 name: Run Query Tester
 
 on:
-  # Triggers the workflow weekly on Mondays at 6:54 am
-  schedule:
-    - cron: '54 6 * * 1'
+  push:
+    branches:
+      - main
+    paths:
+      - 'tests/**'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -23,4 +25,13 @@ jobs:
       - name: 
         env:
           DEFAULT_BRANCH: master
-        run: mkdir -p results && python src/query_tester.py --input tests
+        run: mkdir -p results && python src/query_tester.py --input tests 2> results/tests_log.txt
+      - name: Define repository's owner
+        run: chown -R root /__w/ccf_owl_query_tester/ccf_owl_query_tester
+      - name: Commit tests log
+        run: |
+          git config --global user.name 'Anita Caron'
+          git config --global user.email 'anitacaron@users.noreply.github.com'
+          git add results/tests_log.txt
+          git commit -m "Automated test"
+          git push origin main
