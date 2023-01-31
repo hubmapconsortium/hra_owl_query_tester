@@ -32,6 +32,7 @@ def parse_tester(config) -> dict:
   input = comp_ques['input']
   qm = comp_ques['query_mechanism']
 
+  tests['description'] = comp_ques['description']
   tests['expected_results'] = comp_ques['expected_result']
   tests['endpoints'] = []
 
@@ -102,11 +103,10 @@ def main(input):
     logging.error("Given path has unsupported file extension.", )
 
   for test_doc in test_docs:
-    if len(test_docs) > 1:
-      logging.info(f'Checking {test_doc}')
-
+    logging.info(f'Testing {test_doc}')
     config_file = os.path.abspath(test_doc)
     tests = parse_tester(config_file)
+    logging.info(f"Description: {tests['description']}")                                                                               
     run_tests(tests)
 
 
