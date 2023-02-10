@@ -6,8 +6,21 @@ import pandas as pd
 import glob
 from ruamel.yaml import YAML, YAMLError
 from runner import Runner
+from mdutils import MdUtils
 
 logging.basicConfig(level=logging.INFO)
+
+TERM_LABEL_QUERY = '''
+  PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+  SELECT ?term ?label
+  WHERE {
+    VALUES ?term {
+      terms
+    }
+    ?term rdfs:label ?label .
+  }
+'''
 
 def create_sparql(id: str, query: str, input: dict):
   for var_name, values in input.items():
@@ -32,6 +45,7 @@ def parse_tester(config) -> dict:
   input = comp_ques['input']
   qm = comp_ques['query_mechanism']
 
+  tests['input'] = input
   tests['description'] = comp_ques['description']
   tests['expected_results'] = comp_ques['expected_result']
   tests['endpoints'] = []
@@ -51,6 +65,11 @@ def parse_tester(config) -> dict:
 
   return tests
 
+def get_labels(terms):
+  input = {'terms': terms}
+  results_file = run_query('ccf', create_sparql('labels', TERM_LABEL_QUERY, input))
+  return pd.read_csv(results_file)
+
 def run_query(endpoint, query):
   runner = Runner()
   
@@ -67,7 +86,7 @@ def compare_results(expected_results: dict, results: pathlib.Path):
   
   return missing, misplaced
 
-def is_test_passed(expected_results, results):
+def is_test_passed(expected_results, results, report):
   if os.path.getsize(results) == 0:
     logging.info("No results found. Please, check the query.")
     return False
@@ -77,19 +96,39 @@ def is_test_passed(expected_results, results):
     return True
   if len(missing) or len(misplaced):
     if len(missing):
+      report.new_paragraph(text="Following terms are missing:")
+      labels = get_labels(list(missing))
+      
+      for _, row in labels.iterrows():
+        report.new_paragraph(text=f"[{row['label']}]({row['term']})")
       logging.info(f"Following terms are missing: {missing}")
+      
     if len(misplaced):
+      report.new_paragraph(text="Following terms are not expected:")
+      labels = get_labels(list(misplaced))
+      
+      for _, row in labels.iterrows():
+        report.new_paragraph(text=f"[{row['label']}]({row['term']})")
       logging.info(f"Following terms are not expected: {misplaced}")
     return False
 
-
-def run_tests(tests: dict):
+def run_tests(tests: dict, report: MdUtils):
   for e in tests['endpoints']:
     results = run_query(e['endpoint'], e['query'])
-    if is_test_passed(expected_results=tests['expected_results'], results=results):
+    report.new_paragraph(text="Input terms", bold_italics_code="b")
+    for input, value in tests['input'].items():
+      report.new_paragraph(text=f"{input}")
+      labels = get_labels(value)
+      for _, row in labels.iterrows():
+        report.new_paragraph(text=f"[{row['label']}]({row['term']})")
+    if is_test_passed(expected_results=tests['expected_results'], results=results, report=report):
+      report.new_paragraph(text=f"PASSED using {e['endpoint']}", bold_italics_code="b")
       logging.info(f"PASSED for {e['endpoint']}")
     else:
+      report.new_paragraph(text=f"FAILED using {e['endpoint']}", bold_italics_code="b")
       logging.info(f"FAILED for {e['endpoint']}")
+  
+  return report
 
 def main(input):
   if os.path.isdir(input):
@@ -100,14 +139,20 @@ def main(input):
   elif input.endswith('.yaml') or input.endswith('.yml'):
     test_docs = [os.path.abspath(input)]
   else:
-    logging.error("Given path has unsupported file extension.", )
+    logging.error("Given path has unsupported file extension.")
+    return False
 
+  test_results = MdUtils(file_name='results/README.md', title='Competency Questions Results')
+  logging.info("Look into the file at 'results/README.md' to have a user friendly view of the reports.")
   for test_doc in test_docs:
+    test_results.new_header(1, f"Test results for {test_doc}")
     logging.info(f'Testing {test_doc}')
     config_file = os.path.abspath(test_doc)
     tests = parse_tester(config_file)
-    logging.info(f"Description: {tests['description']}")                                                                               
-    run_tests(tests)
+    test_results.new_paragraph(text=f"{tests['description']}")
+    test_results = run_tests(tests, test_results)
+    
+  test_results.create_md_file()
 
 
 if __name__ == "__main__":
