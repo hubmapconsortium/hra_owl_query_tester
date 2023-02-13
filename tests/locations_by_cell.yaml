@@ -1,17 +1,17 @@
 id: locations_by_cell
 description: Tests locations by cells types X
 
-input:
-  cells:
-    - http://purl.obolibrary.org/obo/CL_4030022
-    - http://purl.obolibrary.org/obo/CL_1001106
-    - http://purl.obolibrary.org/obo/CL_1001318
-    - http://purl.obolibrary.org/obo/CL_4030015
-    - http://purl.obolibrary.org/obo/CL_1000768
-    
-expected_result:
-  location:
-    - http://purl.obolibrary.org/obo/UBERON_0002113
+tests:
+  - test: "Location of cells renal medullary fibroblast, renal interstitial pericyte and kidney connecting tubule epithelial cell"
+    input:
+      cells:
+        - http://purl.obolibrary.org/obo/CL_4030022
+        - http://purl.obolibrary.org/obo/CL_1001318
+        - http://purl.obolibrary.org/obo/CL_1000768
+        
+    expected_result:
+      location:
+        - http://purl.obolibrary.org/obo/UBERON_0002113
 
 query_mechanism:
   relationgraph:

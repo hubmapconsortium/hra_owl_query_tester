@@ -1,22 +1,24 @@
 id: cells_by_location
 description: Tests cells types by location X
 
-input:
-  locations:
-    - http://purl.obolibrary.org/obo/UBERON_0002113
-    
-expected_result:
-  cell:
-    - http://purl.obolibrary.org/obo/CL_4030022
-    - http://purl.obolibrary.org/obo/CL_1001106
-    - http://purl.obolibrary.org/obo/CL_1001318
-    - http://purl.obolibrary.org/obo/CL_4030015
-    - http://purl.obolibrary.org/obo/CL_1000768
-    - http://purl.obolibrary.org/obo/CL_4030018
-    - http://purl.obolibrary.org/obo/CL_1001108
-    - http://purl.obolibrary.org/obo/CL_4030009
-    - http://purl.obolibrary.org/obo/CL_1001431
-    - http://purl.obolibrary.org/obo/CL_0000653
+tests:
+  - test: "Cells in kidney"
+    input:
+      locations:
+        - http://purl.obolibrary.org/obo/UBERON_0002113
+        
+    expected_result:
+      cell:
+        - http://purl.obolibrary.org/obo/CL_4030022
+        - http://purl.obolibrary.org/obo/CL_1001106
+        - http://purl.obolibrary.org/obo/CL_1001318
+        - http://purl.obolibrary.org/obo/CL_4030015
+        - http://purl.obolibrary.org/obo/CL_1000768
+        - http://purl.obolibrary.org/obo/CL_4030018
+        - http://purl.obolibrary.org/obo/CL_1001108
+        - http://purl.obolibrary.org/obo/CL_4030009
+        - http://purl.obolibrary.org/obo/CL_1001431
+        - http://purl.obolibrary.org/obo/CL_0000653
 
 query_mechanism:
   relationgraph:

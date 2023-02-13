@@ -1,21 +1,23 @@
 id: cells_by_marker
 description: This tests all cells expressing marker Z
 
-input:
-  markers:
-    - http://identifiers.org/hgnc/6445
+tests:
+  - test: Cells expressing marker KRT7
+    input:
+      markers:
+        - http://identifiers.org/hgnc/6445
 
-expected_result:
-  cell:
-    - http://purl.obolibrary.org/obo/CL_0000033
-    - http://purl.obolibrary.org/obo/CL_0000523
-    - http://purl.obolibrary.org/obo/CL_0000244
-    - http://purl.obolibrary.org/obo/CL_0002536
-    - http://purl.obolibrary.org/obo/CL_0000434
-    - http://purl.obolibrary.org/obo/CL_0008036
-    - http://purl.obolibrary.org/obo/CL_0000525
-    - http://purl.obolibrary.org/obo/CL_0000240
-    - http://purl.obolibrary.org/obo/CL_0008036
+    expected_result:
+      cell:
+        - http://purl.obolibrary.org/obo/CL_0000033
+        - http://purl.obolibrary.org/obo/CL_0000523
+        - http://purl.obolibrary.org/obo/CL_0000244
+        - http://purl.obolibrary.org/obo/CL_0002536
+        - http://purl.obolibrary.org/obo/CL_0000434
+        - http://purl.obolibrary.org/obo/CL_0008036
+        - http://purl.obolibrary.org/obo/CL_0000525
+        - http://purl.obolibrary.org/obo/CL_0000240
+        - http://purl.obolibrary.org/obo/CL_0008036
 
 query_mechanism:
   relationgraph:
