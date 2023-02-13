@@ -34,7 +34,6 @@ def create_sparql(id: str, query: str, input: dict):
   return output
 
 def parse_tester(config) -> dict:
-  tests = {}
   ryaml = YAML(typ='safe')
   with open(config, "r") as f:
     try:
@@ -42,28 +41,7 @@ def parse_tester(config) -> dict:
     except YAMLError as exc:
       logging.info(f'Failed to load test config: {config}')
 
-  input = comp_ques['input']
-  qm = comp_ques['query_mechanism']
-
-  tests['input'] = input
-  tests['description'] = comp_ques['description']
-  tests['expected_results'] = comp_ques['expected_result']
-  tests['endpoints'] = []
-
-  if 'relationgraph' in qm.keys():
-    t = {}
-    endpoint = qm['relationgraph']
-    t['endpoint'] = 'relationgraph'
-    t['query'] = create_sparql(f"mat-{comp_ques['id']}", endpoint['query'], input)
-    tests['endpoints'].append(t)
-  if 'ccf' in qm.keys():
-    t = {}
-    endpoint = qm['ccf']
-    t['endpoint'] = 'ccf'
-    t['query'] = create_sparql(f"ccf-{comp_ques['id']}", endpoint['query'], input)
-    tests['endpoints'].append(t)
-
-  return tests
+  return comp_ques
 
 def get_labels(terms):
   input = {'terms': terms}
@@ -113,20 +91,24 @@ def is_test_passed(expected_results, results, report):
     return False
 
 def run_tests(tests: dict, report: MdUtils):
-  for e in tests['endpoints']:
-    results = run_query(e['endpoint'], e['query'])
-    report.new_paragraph(text="Input terms", bold_italics_code="b")
-    for input, value in tests['input'].items():
-      report.new_paragraph(text=f"{input}")
-      labels = get_labels(value)
-      for _, row in labels.iterrows():
-        report.new_paragraph(text=f"[{row['label']}]({row['term']})")
-    if is_test_passed(expected_results=tests['expected_results'], results=results, report=report):
-      report.new_paragraph(text=f"PASSED using {e['endpoint']}", bold_italics_code="b")
-      logging.info(f"PASSED for {e['endpoint']}")
-    else:
-      report.new_paragraph(text=f"FAILED using {e['endpoint']}", bold_italics_code="b")
-      logging.info(f"FAILED for {e['endpoint']}")
+  endpoints = tests["query_mechanism"].keys()
+  for test in tests['tests']:
+    for e in endpoints:
+      query = tests['query_mechanism'][e]['query']
+      results = run_query(e, create_sparql(tests['id'], query, test['input']))
+      report.new_paragraph(text=test['test'], bold_italics_code="bi")
+      report.new_paragraph(text="Input terms", bold_italics_code="b")
+      for input, value in test['input'].items():
+        report.new_paragraph(text=f"{input}")
+        labels = get_labels(value)
+        for _, row in labels.iterrows():
+          report.new_paragraph(text=f"[{row['label']}]({row['term']})")
+      if is_test_passed(expected_results=test['expected_result'], results=results, report=report):
+        report.new_paragraph(text=f"PASSED using {e}", bold_italics_code="b")
+        logging.info(f"PASSED for {e}")
+      else:
+        report.new_paragraph(text=f"FAILED using {e}", bold_italics_code="b")
+        logging.info(f"FAILED for {e}")
   
   return report
 

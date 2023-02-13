@@ -1,22 +1,33 @@
 id: cells_by_location_marker
 description: This tests all cells in location X expressing marker Z
 
-input:
-  locations:
-    - http://purl.obolibrary.org/obo/UBERON_0002113
-  markers:
-    - http://identifiers.org/hgnc/4172
-
-expected_result:
-  cell:
-    - http://purl.obolibrary.org/obo/CL_1000716
-    - http://purl.obolibrary.org/obo/CL_1000454
-    - http://purl.obolibrary.org/obo/CL_1000768
-    - http://purl.obolibrary.org/obo/CL_4030019
-    - http://purl.obolibrary.org/obo/CL_1001431
-    - http://purl.obolibrary.org/obo/CL_1001432
-    - http://purl.obolibrary.org/obo/CL_1000714
-
+tests:
+  - test: "Cells in kidney expressing marker GATA3"
+    input:
+      locations:
+        - http://purl.obolibrary.org/obo/UBERON_0002113
+      markers:
+        - http://identifiers.org/hgnc/4172
+    expected_result:
+      cell:
+        - http://purl.obolibrary.org/obo/CL_1000716
+        - http://purl.obolibrary.org/obo/CL_1000454
+        - http://purl.obolibrary.org/obo/CL_1000768
+        - http://purl.obolibrary.org/obo/CL_4030019
+        - http://purl.obolibrary.org/obo/CL_1001431
+        - http://purl.obolibrary.org/obo/CL_1001432
+        - http://purl.obolibrary.org/obo/CL_1000714
+  
+  - test: "Cells in lung expressing marker TRPC6"
+    input:
+      locations:
+        - http://purl.obolibrary.org/obo/UBERON_0002048
+      markers:
+        - http://identifiers.org/hgnc/12338
+    expected_result:
+      cell:
+        - http://purl.obolibrary.org/obo/CL_0009089
+        - http://purl.obolibrary.org/obo/CL_1000350
 
 query_mechanism:
   relationgraph:

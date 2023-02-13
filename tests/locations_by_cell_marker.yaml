@@ -1,15 +1,28 @@
 id: locations_by_cell_marker
 description: This tests all locations of cell type X expressing marker Z
 
-input:
-  cells:
-    - http://purl.obolibrary.org/obo/CL_0009111
-  markers:
-    - http://identifiers.org/hgnc/1633
+tests:
+  - test: "Locations of centrocyte expressing marker CD19"
+    input:
+      cells:
+        - http://purl.obolibrary.org/obo/CL_0009111
+      markers:
+        - http://identifiers.org/hgnc/1633
 
-expected_result:
-  location:
-    - http://purl.obolibrary.org/obo/UBERON_0000029
+    expected_result:
+      location:
+        - http://purl.obolibrary.org/obo/UBERON_0000029
+        
+  - test: "Locations of enterocyte of epithelium of large intestine expressing markers BEST4 AND KRT20"
+    input:
+      cells:
+        - http://purl.obolibrary.org/obo/CL_0002071
+      markers:
+        - http://identifiers.org/hgnc/17106
+        - http://identifiers.org/hgnc/20412
+    expected_result:
+      location:
+        - http://purl.obolibrary.org/obo/UBERON_0000059
 
 query_mechanism:
   relationgraph:
