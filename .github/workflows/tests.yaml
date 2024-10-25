@@ -27,7 +27,7 @@ jobs:
           DEFAULT_BRANCH: master
         run: mkdir -p results && python src/query_tester.py --input tests
       - name: Define repository's owner
-        run: chown -R root /__w/ccf_owl_query_tester/ccf_owl_query_tester
+        run: chown -R root /__w/hra_owl_query_tester/hra_owl_query_tester
       - name: Commit tests log
         run: |
           git config --global user.name 'Anita Caron'

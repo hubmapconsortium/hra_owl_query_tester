@@ -1,9 +1,9 @@
 # ccf_owl_query_tester
-A framework for specifying and testing queries against CCF.owl based on competency questions.
+A framework for specifying and testing queries against HRA.owl based on competency questions.
 
 ## Motivation:
 
-Ad hoc testing of the CCF ontology has uncovered cases where simple use-case queries do not work.  This repo aims to run these test more systematically.
+Ad hoc testing of the HRA ontology has uncovered cases where simple use-case queries do not work.  This repo aims to run these test more systematically.
 
 ## Aim:
 
@@ -29,9 +29,9 @@ A Python runner + GitHub actions will run these queries against the endpoints, r
 * Location(s) of cell type X expressing marker Z
  
 ### Potential endpoints/query mechanisms:
-* CCF.owl + relationgraph --> SPARQL queries of precomputed OWL inferences.  Pre-generate file with RG. SPARQL Queries could be run in ROBOT.
-* CCF.owl --> SPARQL queries of CCF properties (Use file as-is Queries in ROBOT)
-* CCF.owl + EL queries via [OWLERY](https://github.com/phenoscape/owlery) (would require firing up local server - needs containerization)
+* HRA.owl + relationgraph --> SPARQL queries of precomputed OWL inferences.  Pre-generate file with RG. SPARQL Queries could be run in ROBOT.
+* HRA.owl --> SPARQL queries of HRA properties (Use file as-is Queries in ROBOT)
+* HRA.owl + EL queries via [OWLERY](https://github.com/phenoscape/owlery) (would require firing up local server - needs containerization)
 
 ## How to add tests and run them
 

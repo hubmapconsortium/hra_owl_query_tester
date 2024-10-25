@@ -45,7 +45,7 @@ def parse_tester(config) -> dict:
 
 def get_labels(terms):
   input = {'terms': terms}
-  results_file = run_query('ccf', create_sparql('labels', TERM_LABEL_QUERY, input))
+  results_file = run_query('hra', create_sparql('labels', TERM_LABEL_QUERY, input))
   return pd.read_csv(results_file)
 
 def run_query(endpoint, query):
