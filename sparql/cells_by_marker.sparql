@@ -1,20 +1,2 @@
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX cell: <http://purl.obolibrary.org/obo/CL_0000000>
-PREFIX ccf: <http://purl.org/ccf/>
-PREFIX has_characterizing_marker_set: <http://purl.obolibrary.org/obo/RO_0015004>
-PREFIX marker_component: <http://purl.org/ccf/has_marker_component>
-PREFIX HGNC: <http://identifiers.org/hgnc/>
-
-SELECT ?cell
-WHERE {
-  ?cell rdfs:subClassOf [ 
-    owl:onProperty has_characterizing_marker_set: ;
-    owl:someValuesFrom [
-      owl:intersectionOf/rdf:rest*/rdf:first [
-        owl:onProperty marker_component: ;
-        owl:someValuesFrom ?marker
-      ]
-    ] 
-  ] .
-}
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX expresses: <http://purl.obolibrary.org/obo/RO_0002292>
+SELECT ?cell WHERE { VALUES ?marker { <http://identifiers.org/hgnc/6445> } ?cell expresses: ?marker . } 
