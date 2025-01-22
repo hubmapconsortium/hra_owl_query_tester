@@ -1,0 +1,10 @@
+
+  PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+  SELECT ?term ?label
+  WHERE {
+    VALUES ?term {
+      <http://purl.obolibrary.org/obo/CL_4030010> <http://purl.obolibrary.org/obo/CL_1000850> <http://purl.obolibrary.org/obo/CL_1001033> <http://purl.obolibrary.org/obo/CL_0002307> <http://purl.obolibrary.org/obo/CL_1000691> <http://purl.obolibrary.org/obo/CL_0002306> <http://purl.obolibrary.org/obo/CL_1001432> <http://purl.obolibrary.org/obo/CL_1001111> <http://purl.obolibrary.org/obo/CL_1000452> <http://purl.obolibrary.org/obo/CL_4030021> <http://purl.obolibrary.org/obo/CL_1001107> <http://purl.obolibrary.org/obo/CL_1000695> <http://purl.obolibrary.org/obo/CL_4030019> <http://purl.obolibrary.org/obo/CL_4030013> <http://purl.obolibrary.org/obo/CL_4030017> <http://purl.obolibrary.org/obo/CL_1001285> <http://purl.obolibrary.org/obo/CL_1001109> <http://purl.obolibrary.org/obo/CL_1001096> <http://purl.obolibrary.org/obo/CL_4030020> <http://purl.obolibrary.org/obo/CL_1000742> <http://purl.obolibrary.org/obo/CL_1000549> <http://purl.obolibrary.org/obo/CL_1000715> <http://purl.obolibrary.org/obo/CL_1000849> <http://purl.obolibrary.org/obo/CL_1000454> <http://purl.obolibrary.org/obo/CL_1000716> <http://purl.obolibrary.org/obo/CL_0000648> <http://purl.obolibrary.org/obo/CL_4030016> <http://purl.obolibrary.org/obo/CL_4030014> <http://purl.obolibrary.org/obo/CL_4030011> <http://purl.obolibrary.org/obo/CL_1000547> <http://purl.obolibrary.org/obo/CL_1000597> <http://purl.obolibrary.org/obo/CL_1001099> <http://purl.obolibrary.org/obo/CL_1001005> <http://purl.obolibrary.org/obo/CL_1000548> <http://purl.obolibrary.org/obo/CL_4030012> <http://purl.obolibrary.org/obo/CL_1000546> <http://purl.obolibrary.org/obo/CL_1000718> <http://purl.obolibrary.org/obo/CL_1000839> <http://purl.obolibrary.org/obo/CL_1000692> <http://purl.obolibrary.org/obo/CL_1000714> <http://purl.obolibrary.org/obo/CL_1000838> <http://purl.obolibrary.org/obo/CL_1000717>
+    }
+    ?term rdfs:label ?label .
+  }

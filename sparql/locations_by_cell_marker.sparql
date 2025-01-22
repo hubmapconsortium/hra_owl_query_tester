@@ -1,0 +1,2 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX part_of: <http://purl.obolibrary.org/obo/BFO_0000050> PREFIX cell: <http://purl.obolibrary.org/obo/CL_0000000> PREFIX expresses: <http://purl.obolibrary.org/obo/RO_0002292>
+SELECT ?location WHERE { VALUES ?marker { <http://identifiers.org/hgnc/17106> <http://identifiers.org/hgnc/20412> } VALUES ?cell { <http://purl.obolibrary.org/obo/CL_0002071> } ?cell rdfs:subClassOf cell: . ?cell part_of: ?location . ?cell expresses: ?marker . } 
